@@ -9,11 +9,11 @@ if (process.env.NODE_ENV === "development") {
 } else {
   API_KEY = process.env.OMDB_API_KEY;
 }
-const API_URL = `http://www.omdbapi.com?apikey=${API_KEY}`;
+const API_URL = `https://www.omdbapi.com?apikey=${API_KEY}`;
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("Batman");
-  const [movies, setMovies] = useState("");
+  const [searchTerm, setSearchTerm] = useState("Superman");
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     searchMovies(searchTerm);
@@ -37,6 +37,8 @@ function App() {
           onChange={(event) => setSearchTerm(event.target.value)}
         />
         <img src={SearchLogo} className="App-logo" alt="logo" />
+
+        {movies?.map((movie) => console.log(movie.Title))}
       </div>
     </div>
   );
