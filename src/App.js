@@ -1,32 +1,26 @@
 import React, { useEffect, useState } from "react";
 
-import SearchLogo from "./search.svg";
 import "./App.css";
+import SearchLogo from "./search.svg";
+import AllMovies from "./components/Movies";
 
-console.log(process.env);
-let API_KEY = process.env.REACT_APP_OMDB_API_KEY;
-
-// if (process.env.NODE_ENV === "development") {
-//   API_KEY = process.env.REACT_APP_OMDB_API_KEY;
-// } else {
-//   API_KEY = process.env.OMDB_API_KEY;
-// }
-
+const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 const API_URL = `https://www.omdbapi.com?apikey=${API_KEY}`;
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("Superman");
+  const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    searchMovies(searchTerm);
-  }, [searchTerm]);
+    searchMovies("Batman");
+  }, []);
 
   async function searchMovies(title) {
-    const response = await fetch(`${API_URL}&s=${title}`);
-    const data = await response.json();
-    setMovies(data.Search);
-    console.log(data);
+    if (title) {
+      const response = await fetch(`${API_URL}&s=${title}`);
+      const data = await response.json();
+      setMovies(data.Search);
+    }
   }
 
   return (
@@ -39,10 +33,14 @@ function App() {
           placeholder="Search for movies"
           onChange={(event) => setSearchTerm(event.target.value)}
         />
-        <img src={SearchLogo} className="App-logo" alt="logo" />
-
-        {movies?.map((movie) => console.log(movie.Title))}
+        <img
+          src={SearchLogo}
+          className="App-logo"
+          alt="logo"
+          onClick={() => searchMovies(searchTerm)}
+        />
       </div>
+      <AllMovies movies={movies} />
     </div>
   );
 }
