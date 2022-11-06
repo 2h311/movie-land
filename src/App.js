@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import SearchLogo from "./search.svg";
 import "./App.css";
 
+console.log(process.env);
 let API_KEY;
 if (process.env.NODE_ENV === "development") {
   API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 } else {
   API_KEY = process.env.OMDB_API_KEY;
 }
+
 const API_URL = `https://www.omdbapi.com?apikey=${API_KEY}`;
 
 function App() {
